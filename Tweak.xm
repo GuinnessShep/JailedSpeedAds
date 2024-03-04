@@ -5,11 +5,11 @@
 %hook AVPlayer
 
 - (void)setRate:(float)rate {
- %orig(rate * 30.0f);
-}
-
-- (float)rate{
- return %orig() * 0.5f;
+    if (rate == 1.0) { // Assuming 1.0 is the normal rate for video ads
+        %orig(2.0); // Doubles the speed for ad playback
+    } else {
+        %orig(rate); // Applies the original rate for non-ad content
+    }
 }
 
 %end
